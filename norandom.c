@@ -22,6 +22,7 @@ static long dummy_ioctl(struct file *f, unsigned int cmd, unsigned long arg);
 #define DEVICE_NAME "norandom"	/* Dev name as it appears in /proc/devices   */
 #define BUF_LEN 80		/* Max length of the message from the device */
 #define RANDOM_BYTE (0x41)
+#define RNDGETENTCNT (0x80045200)
 
 /* 
  * Global variables are declared as static, so are global within the file. 
@@ -102,6 +103,12 @@ dummy_poll(struct file *file, poll_table * wait){
 static long 
 dummy_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 {
+	int __user *p = (int __user *)arg;
+	switch (cmd) {
+		//fake entropy read
+		case RNDGETENTCNT:
+			put_user(4000, p);
+	}
 	return 0;
 }
 
