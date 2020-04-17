@@ -97,7 +97,7 @@ dummy_write(struct file *filp, const char *buff, size_t len, loff_t * off)
 
 static unsigned int 
 dummy_poll(struct file *file, poll_table * wait){
-	return 0;
+	return 1;
 }
 
 static long 
