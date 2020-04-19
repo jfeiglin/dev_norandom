@@ -48,16 +48,16 @@ int init_module(void)
 	  return Major;
 	}
 
-	printk(KERN_INFO "norandom device created w major number %d\n", Major);
-	printk(KERN_INFO "create a dev file with: \n");
-	printk(KERN_INFO "\t'mknod /dev/%s c %d 0'.\n", DEVICE_NAME, Major);
+	printk(KERN_INFO "norandom major: %d\n", Major);
+	//printk(KERN_INFO "create a dev file with: \n");
+	//printk(KERN_INFO "\t'mknod /dev/%s c %d 0'.\n", DEVICE_NAME, Major);
 
 	return SUCCESS;
 }
 
 void cleanup_module(void)
 {
-	printk(KERN_INFO "norandom device destroyed w major number %d\n", Major);
+	printk(KERN_INFO "norandom device destroyed\n");
 	unregister_chrdev(Major, DEVICE_NAME);
 }
 
