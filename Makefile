@@ -1,6 +1,6 @@
 MODULE_MAME = norandom
 
-SRCS = src/main.c src/norandom.c
+SRCS = src/main.c src/norandom.c src/syscall_hook.c
 
 INCLUDE_DIR = -I$(src)/include
 
