@@ -1,20 +1,20 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
-#include <linux/fs.h>
+#include <linux/kprobes.h>
+#include <linux/limits.h>
 #include <linux/sched.h>
-#include <linux/poll.h>
-#include <uapi/linux/types.h>
-#include <asm/uaccess.h>	/* for put_user */
+#include <asm/uaccess.h>
 
-#define SUCCESS 0
-#define DEVICE_NAME "norandom"	/* Dev name as it appears in /proc/devices   */
-#define BUF_LEN 80		/* Max length of the message from the device */
-#define RANDOM_BYTE (0x41)
-#define RNDGETENTCNT (0x80045200)
+#define RANDOM_BYTE (65)
+#define EXTRACT_CRNG_FNAME ("extract_crng")
+#define RANDOM_READ_FNAME ("random_read")
+#define URANDOM_READ_FNAME ("urandom_read")
 
-int device_open(struct inode *, struct file *);
-int device_release(struct inode *, struct file *);
-ssize_t device_read(struct file *, char *, size_t, loff_t *);
-ssize_t dummy_write(struct file *, const char *, size_t, loff_t *);
-unsigned int dummy_poll(struct file *file, poll_table * wait);
-long dummy_ioctl(struct file *f, unsigned int cmd, unsigned long arg);
+/* per-instance kprobe private data */
+struct random_buf_data {
+	char *random_buffer;
+    size_t random_buffer_len;
+};
+
+int register_all_probes(void);
+void unregister_all_probes(void);
