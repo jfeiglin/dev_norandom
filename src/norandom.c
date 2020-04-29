@@ -34,7 +34,7 @@ int extract_crng_ret_handler(struct kretprobe_instance *ri, struct pt_regs *regs
         (unsigned long int)data->random_buffer,
         data->random_buffer_len
     );
-    //memset here
+    memset(data->random_buffer, 0, data->random_buffer_len);
 	return 0;
 }
 
